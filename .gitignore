@@ -1,0 +1,17 @@
+# Kế hoạch / tài liệu cá nhân — không commit lên GitHub
+plan/
+
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# IDE
+.idea/
+*.DotSettings.user
+
+# OS
+.DS_Store
+Thumbs.db

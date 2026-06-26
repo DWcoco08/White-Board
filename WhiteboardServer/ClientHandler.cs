@@ -31,7 +31,7 @@ public class ClientHandler
         {
             var stream = _client.GetStream();
             _reader = new StreamReader(stream, Encoding.UTF8);
-            _writer = new StreamWriter(stream, new UTF8Encoding(false)) { AutoFlush = true };
+            _writer = new StreamWriter(stream, new UTF8Encoding(false)) { AutoFlush = true, NewLine = "\n" };
 
             string? line;
             while ((line = await _reader.ReadLineAsync()) != null)

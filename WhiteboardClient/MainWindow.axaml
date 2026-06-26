@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:WhiteboardClient"
+        x:Class="WhiteboardClient.MainWindow"
+        Width="1060" Height="700"
+        Title="Whiteboard cộng tác — LAN TCP Socket">
+
+  <DockPanel>
+
+    <!-- thanh kết nối -->
+    <Border DockPanel.Dock="Top" Background="#2D2D30" Padding="8">
+      <StackPanel Orientation="Horizontal" Spacing="6">
+        <TextBlock Text="Server:" Foreground="White" VerticalAlignment="Center"/>
+        <TextBox x:Name="HostBox" Width="120" Text="127.0.0.1"/>
+        <TextBlock Text="Cổng:" Foreground="White" VerticalAlignment="Center"/>
+        <TextBox x:Name="PortBox" Width="60" Text="5000"/>
+        <TextBlock Text="Tên:" Foreground="White" VerticalAlignment="Center"/>
+        <TextBox x:Name="UserBox" Width="100" Text="huy"/>
+        <TextBlock Text="Phòng:" Foreground="White" VerticalAlignment="Center"/>
+        <TextBox x:Name="RoomBox" Width="120" Text="NetworkClass"/>
+        <Button x:Name="ConnectBtn" Content="Kết nối" Click="OnConnectClick"/>
+        <TextBlock x:Name="StatusText" Text="Chưa kết nối" Foreground="#FFD479"
+                   VerticalAlignment="Center" Margin="8,0,0,0"/>
+      </StackPanel>
+    </Border>
+
+    <!-- bảng điều khiển bên phải -->
+    <Border DockPanel.Dock="Right" Width="270" Background="#F3F3F3" Padding="8">
+      <DockPanel>
+
+        <!-- công cụ -->
+        <StackPanel DockPanel.Dock="Top" Spacing="6">
+          <TextBlock Text="Công cụ vẽ" FontWeight="Bold"/>
+          <ComboBox x:Name="ShapeBox" SelectedIndex="0" HorizontalAlignment="Stretch">
+            <ComboBoxItem>Đường thẳng</ComboBoxItem>
+            <ComboBoxItem>Hình chữ nhật</ComboBoxItem>
+            <ComboBoxItem>Hình tròn</ComboBoxItem>
+            <ComboBoxItem>Bút tự do</ComboBoxItem>
+          </ComboBox>
+
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Text="Màu:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="ColorBox" SelectedIndex="0" Width="100">
+              <ComboBoxItem>#000000</ComboBoxItem>
+              <ComboBoxItem>#E81123</ComboBoxItem>
+              <ComboBoxItem>#0078D7</ComboBoxItem>
+              <ComboBoxItem>#107C10</ComboBoxItem>
+              <ComboBoxItem>#FF8C00</ComboBoxItem>
+            </ComboBox>
+            <TextBlock Text="Nét:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="ThickBox" SelectedIndex="1" Width="55">
+              <ComboBoxItem>1</ComboBoxItem>
+              <ComboBoxItem>2</ComboBoxItem>
+              <ComboBoxItem>4</ComboBoxItem>
+              <ComboBoxItem>6</ComboBoxItem>
+            </ComboBox>
+          </StackPanel>
+
+          <Button x:Name="ClearBtn" Content="Xóa bảng" Click="OnClearClick"
+                  HorizontalAlignment="Stretch"/>
+          <Separator/>
+          <TextBlock Text="Thành viên" FontWeight="Bold"/>
+          <Button x:Name="PermBtn" Content="Khóa/Mở quyền vẽ (thành viên đang chọn)"
+                  Click="OnTogglePermClick" HorizontalAlignment="Stretch" IsVisible="False"/>
+        </StackPanel>
+
+        <!-- chat ở dưới cùng -->
+        <Grid DockPanel.Dock="Bottom" RowDefinitions="Auto,130,Auto" Margin="0,8,0,0">
+          <TextBlock Grid.Row="0" Text="Chat" FontWeight="Bold"/>
+          <Border Grid.Row="1" Background="White" BorderBrush="#CCC" BorderThickness="1" Margin="0,2,0,0">
+            <ScrollViewer x:Name="ChatScroll">
+              <ItemsControl x:Name="ChatList" Margin="4"/>
+            </ScrollViewer>
+          </Border>
+          <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="4" Margin="0,4,0,0">
+            <TextBox x:Name="ChatInput" Width="180" Watermark="Nhập tin nhắn..."
+                     KeyDown="OnChatKeyDown"/>
+            <Button Content="Gửi" Click="OnSendChatClick"/>
+          </StackPanel>
+        </Grid>
+
+        <!-- danh sách thành viên -->
+        <Border Background="White" BorderBrush="#CCC" BorderThickness="1" Margin="0,2,0,0">
+          <ListBox x:Name="MemberList"/>
+        </Border>
+
+      </DockPanel>
+    </Border>
+
+    <!-- vùng vẽ ở giữa -->
+    <Border Background="#DDDDDD" Padding="8">
+      <Border x:Name="BoardHost" BorderBrush="#888" BorderThickness="1" Background="White">
+        <local:WhiteboardCanvas x:Name="Board" ClipToBounds="True"/>
+      </Border>
+    </Border>
+
+  </DockPanel>
+</Window>

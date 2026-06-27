@@ -139,9 +139,10 @@ public class ClientHandler
     private async Task HandleClearAsync()
     {
         if (_user == null || _room == null) return;
-        if (!_user.CanDraw)
+        // chỉ Host mới được xóa bảng
+        if (!_user.IsHost)
         {
-            await SendAsync(new Message { Type = "error", Error = "Bạn không có quyền vẽ" });
+            await SendAsync(new Message { Type = "error", Error = "Chỉ Host mới được xóa bảng" });
             return;
         }
         _rooms.ClearHistory(_room);

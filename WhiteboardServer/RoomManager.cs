@@ -20,10 +20,22 @@ public class RoomManager
                 _rooms[roomName] = room;
             }
 
+            username = MakeUniqueName(room, username); // tránh trùng tên trong cùng phòng
             bool isHost = room.Members.Count == 0;
             var user = new User(username, handler) { IsHost = isHost, CanDraw = true };
             room.Members.Add(user);
             return (room, user);
+        }
+    }
+
+    // nếu tên đã có người dùng trong phòng thì thêm hậu tố: huy -> huy(2) -> huy(3)
+    private static string MakeUniqueName(Room room, string name)
+    {
+        if (!room.Members.Exists(m => m.Name == name)) return name;
+        for (int i = 2; ; i++)
+        {
+            var candidate = $"{name}({i})";
+            if (!room.Members.Exists(m => m.Name == candidate)) return candidate;
         }
     }
 

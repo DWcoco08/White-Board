@@ -19,6 +19,7 @@ public partial class MainWindow : Window
     private bool _isHost;
     private bool _canDraw = true;
     private bool _connected;
+    private bool _leaving; 
     private int _drawCounter;
 
     // trạng thái khi đang kéo chuột
@@ -58,6 +59,7 @@ public partial class MainWindow : Window
             await _socket.SendAsync(new Message { Type = "join", Username = _username, Room = room });
             _connected = true;
             ConnectBtn.IsEnabled = false;
+            LeaveBtn.IsEnabled = true;
         }
         catch (Exception ex)
         {
@@ -67,9 +69,35 @@ public partial class MainWindow : Window
 
     private void OnDisconnected(string reason)
     {
+        if (_leaving) { _leaving = false; return; }
         _connected = false;
         ConnectBtn.IsEnabled = true;
+        LeaveBtn.IsEnabled = false;
         StatusText.Text = "Mất kết nối: " + reason;
+    }
+
+    // rời phòng = đóng kết nối
+    private void OnLeaveClick(object? sender, RoutedEventArgs e)
+    {
+        if (!_connected) return;
+        _leaving = true;
+        _socket.Close();
+        ResetRoomUi();
+    }
+
+    private void ResetRoomUi()
+    {
+        _connected = false;
+        _isHost = false;
+        _canDraw = true;
+        Board.Clear();
+        _members.Clear();
+        _chat.Clear();
+        ConnectBtn.IsEnabled = true;
+        LeaveBtn.IsEnabled = false;
+        PermBtn.IsVisible = false;
+        ClearBtn.IsVisible = false;
+        StatusText.Text = "Đã rời phòng";
     }
 
     // nhận message

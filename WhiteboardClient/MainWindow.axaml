@@ -19,6 +19,7 @@
         <TextBlock Text="Phòng:" Foreground="White" VerticalAlignment="Center"/>
         <TextBox x:Name="RoomBox" Width="120" Text="NetworkClass"/>
         <Button x:Name="ConnectBtn" Content="Kết nối" Click="OnConnectClick"/>
+        <Button x:Name="LeaveBtn" Content="Rời phòng" Click="OnLeaveClick" IsEnabled="False"/>
         <TextBlock x:Name="StatusText" Text="Chưa kết nối" Foreground="#FFD479"
                    VerticalAlignment="Center" Margin="8,0,0,0"/>
       </StackPanel>

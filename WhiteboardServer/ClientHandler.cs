@@ -103,8 +103,9 @@ public class ClientHandler
         var (room, user) = _rooms.JoinOrCreate(roomName, username, this);
         _room = room;
         _user = user;
+        username = user.Name; // dùng tên server cấp (nếu trùng tên)
 
-        // xác nhận cho vào 
+        // xác nhận cho vào
         await SendAsync(new Message { Type = "joined", Room = roomName, Username = username, IsHost = user.IsHost });
         // gửi lại toàn bộ lịch sử để khôi phục bảng
         await SendAsync(new Message { Type = "history", Events = _rooms.SnapshotHistory(room) });

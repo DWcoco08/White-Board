@@ -106,6 +106,7 @@ public partial class MainWindow : Window
         switch (m.Type)
         {
             case "joined":
+                _username = m.Username ?? _username; // dùng tên server cấp
                 _isHost = m.IsHost ?? false;
                 PermBtn.IsVisible = _isHost;
                 ClearBtn.IsVisible = _isHost; // chỉ Host mới thấy nút Xóa bảng

@@ -80,6 +80,7 @@ public partial class MainWindow : Window
             case "joined":
                 _isHost = m.IsHost ?? false;
                 PermBtn.IsVisible = _isHost;
+                ClearBtn.IsVisible = _isHost; // chỉ Host mới thấy nút Xóa bảng
                 StatusText.Text = $"Đã vào phòng {m.Room} ({(_isHost ? "Host" : "Member")})";
                 break;
 
@@ -135,6 +136,7 @@ public partial class MainWindow : Window
             _canDraw = me.CanDraw;
             _isHost = me.IsHost;
             PermBtn.IsVisible = _isHost;
+            ClearBtn.IsVisible = _isHost; // đồng bộ lại khi quyền Host thay đổi
         }
     }
 

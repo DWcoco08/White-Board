@@ -28,7 +28,7 @@ public class RoomManager
         }
     }
 
-    // nếu tên đã có người dùng trong phòng thì thêm hậu tố: huy -> huy(2) -> huy(3) ...
+    // nếu tên đã có người dùng trong phòng thì thêm hậu tố: huy -> huy(2) -> huy(3)
     private static string MakeUniqueName(Room room, string name)
     {
         if (!room.Members.Exists(m => m.Name == name)) return name;

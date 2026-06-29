@@ -39,26 +39,22 @@
 
     <!-- thanh kết nối -->
     <Border DockPanel.Dock="Top" Background="#F5F5F5" Padding="8,6" BorderBrush="#CCC" BorderThickness="0,0,0,1">
-      <DockPanel>
-        <Button DockPanel.Dock="Right" x:Name="ToggleSideBtn" Content="☰"
-                Click="OnToggleSidebar" Padding="12,4" FontSize="16"/>
-        <StackPanel Orientation="Horizontal" Spacing="6">
-          <TextBlock Text="Server:"/>
-          <TextBox x:Name="HostBox" Width="110" Watermark="127.0.0.1"/>
-          <TextBlock Text="Cổng:"/>
-          <TextBox x:Name="PortBox" Width="55" Watermark="5000"/>
-          <TextBlock Text="Tên:"/>
-          <TextBox x:Name="UserBox" Width="90" Watermark="tên của bạn"/>
-          <TextBlock Text="Phòng:"/>
-          <TextBox x:Name="RoomBox" Width="110" Watermark="tên phòng"/>
-          <Button x:Name="ConnectBtn" Content="Kết nối" Click="OnConnectClick"/>
-          <Button x:Name="LeaveBtn" Content="Rời phòng" Click="OnLeaveClick"/>
-          <TextBlock x:Name="StatusText" Text="Chưa kết nối" Foreground="#A33B00" Margin="8,0,0,0"/>
-        </StackPanel>
-      </DockPanel>
+      <StackPanel Orientation="Horizontal" Spacing="6">
+        <TextBlock Text="Server:"/>
+        <TextBox x:Name="HostBox" Width="110" Watermark="127.0.0.1"/>
+        <TextBlock Text="Cổng:"/>
+        <TextBox x:Name="PortBox" Width="55" Watermark="5000"/>
+        <TextBlock Text="Tên:"/>
+        <TextBox x:Name="UserBox" Width="90" Watermark="tên của bạn"/>
+        <TextBlock Text="Phòng:"/>
+        <TextBox x:Name="RoomBox" Width="110" Watermark="tên phòng"/>
+        <Button x:Name="ConnectBtn" Content="Kết nối" Click="OnConnectClick"/>
+        <Button x:Name="LeaveBtn" Content="Rời phòng" Click="OnLeaveClick"/>
+        <TextBlock x:Name="StatusText" Text="Chưa kết nối" Foreground="#A33B00" Margin="8,0,0,0"/>
+      </StackPanel>
     </Border>
 
-    <!-- sidebar phải (ẩn/hiện bằng nút ☰) -->
+    <!-- sidebar phải -->
     <Border x:Name="SidePanel" DockPanel.Dock="Right" Width="250" Background="#ECECEC" Padding="10">
       <DockPanel>
 
@@ -122,6 +118,12 @@
 
       </DockPanel>
     </Border>
+
+    <!-- thanh kéo ẩn/hiện sidebar, nằm trên cạnh dọc giữa vùng vẽ và sidebar -->
+    <Button x:Name="ToggleHandle" DockPanel.Dock="Right" Content="&gt;"
+            Click="OnToggleSidebar" Width="16" Padding="0" FontSize="11"
+            VerticalContentAlignment="Center" VerticalAlignment="Stretch"
+            ToolTip.Tip="Ẩn/hiện bảng điều khiển"/>
 
     <!-- vùng vẽ ở giữa -->
     <Border Background="#DDDDDD" Padding="8">

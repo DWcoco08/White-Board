@@ -97,10 +97,11 @@ public partial class MainWindow : Window
         StatusText.Text = "Đã rời phòng";
     }
 
-    // ẩn/hiện sidebar phải (nút ☰)
+    // ẩn/hiện sidebar phải bằng thanh kéo ở cạnh dọc
     private void OnToggleSidebar(object? sender, RoutedEventArgs e)
     {
         SidePanel.IsVisible = !SidePanel.IsVisible;
+        ToggleHandle.Content = SidePanel.IsVisible ? ">" : "<";
     }
 
     // nhận message

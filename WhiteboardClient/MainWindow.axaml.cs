@@ -59,7 +59,6 @@ public partial class MainWindow : Window
             await _socket.SendAsync(new Message { Type = "join", Username = _username, Room = room });
             _connected = true;
             ConnectBtn.IsEnabled = false;
-            LeaveBtn.IsEnabled = true;
         }
         catch (Exception ex)
         {
@@ -72,7 +71,6 @@ public partial class MainWindow : Window
         if (_leaving) { _leaving = false; return; }
         _connected = false;
         ConnectBtn.IsEnabled = true;
-        LeaveBtn.IsEnabled = false;
         StatusText.Text = "Mất kết nối: " + reason;
     }
 
@@ -94,10 +92,15 @@ public partial class MainWindow : Window
         _members.Clear();
         _chat.Clear();
         ConnectBtn.IsEnabled = true;
-        LeaveBtn.IsEnabled = false;
         PermBtn.IsVisible = false;
         ClearBtn.IsVisible = false;
         StatusText.Text = "Đã rời phòng";
+    }
+
+    // ẩn/hiện sidebar phải (nút ☰)
+    private void OnToggleSidebar(object? sender, RoutedEventArgs e)
+    {
+        SidePanel.IsVisible = !SidePanel.IsVisible;
     }
 
     // nhận message

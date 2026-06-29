@@ -6,46 +6,60 @@
         Title="Whiteboard cộng tác — LAN TCP Socket">
 
   <Window.Styles>
-    <!-- nhãn trên thanh tối -->
-    <Style Selector="TextBlock.barlabel">
-      <Setter Property="Foreground" Value="#E6E6E6"/>
+    <!-- chữ đen toàn app -->
+    <Style Selector="TextBlock">
+      <Setter Property="Foreground" Value="Black"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-    <!-- tiêu đề mục trong sidebar sáng -->
+    <!-- tiêu đề mục -->
     <Style Selector="TextBlock.head">
-      <Setter Property="Foreground" Value="#1A1A1A"/>
       <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
-    <!-- nút nhấn chính (xanh) -->
-    <Style Selector="Button.accent">
+    <!-- button: xanh, chữ trắng -->
+    <Style Selector="Button">
       <Setter Property="Background" Value="#0078D7"/>
       <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <!-- ô nhập: nền trắng, viền đen, chữ đen -->
+    <Style Selector="TextBox">
+      <Setter Property="Background" Value="White"/>
+      <Setter Property="Foreground" Value="Black"/>
+      <Setter Property="BorderBrush" Value="Black"/>
+      <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    <Style Selector="ComboBox">
+      <Setter Property="Background" Value="White"/>
+      <Setter Property="Foreground" Value="Black"/>
+      <Setter Property="BorderBrush" Value="Black"/>
+      <Setter Property="BorderThickness" Value="1"/>
     </Style>
   </Window.Styles>
 
   <DockPanel>
 
     <!-- thanh kết nối -->
-    <Border DockPanel.Dock="Top" Background="#2D2D30" Padding="8,6">
-      <StackPanel Orientation="Horizontal" Spacing="6">
-        <TextBlock Classes="barlabel" Text="Server:"/>
-        <TextBox x:Name="HostBox" Width="110" Watermark="127.0.0.1"/>
-        <TextBlock Classes="barlabel" Text="Cổng:"/>
-        <TextBox x:Name="PortBox" Width="55" Watermark="5000"/>
-        <TextBlock Classes="barlabel" Text="Tên:"/>
-        <TextBox x:Name="UserBox" Width="90" Watermark="tên của bạn"/>
-        <TextBlock Classes="barlabel" Text="Phòng:"/>
-        <TextBox x:Name="RoomBox" Width="110" Watermark="tên phòng"/>
-        <Button x:Name="ConnectBtn" Content="Kết nối" Click="OnConnectClick" Classes="accent"/>
-        <Button x:Name="LeaveBtn" Content="Rời phòng" Click="OnLeaveClick" IsEnabled="False"
-                Background="#5A5A5E" Foreground="White"/>
-        <TextBlock x:Name="StatusText" Text="Chưa kết nối" Foreground="#FFD479"
-                   VerticalAlignment="Center" Margin="8,0,0,0"/>
-      </StackPanel>
+    <Border DockPanel.Dock="Top" Background="#F5F5F5" Padding="8,6" BorderBrush="#CCC" BorderThickness="0,0,0,1">
+      <DockPanel>
+        <Button DockPanel.Dock="Right" x:Name="ToggleSideBtn" Content="☰"
+                Click="OnToggleSidebar" Padding="12,4" FontSize="16"/>
+        <StackPanel Orientation="Horizontal" Spacing="6">
+          <TextBlock Text="Server:"/>
+          <TextBox x:Name="HostBox" Width="110" Watermark="127.0.0.1"/>
+          <TextBlock Text="Cổng:"/>
+          <TextBox x:Name="PortBox" Width="55" Watermark="5000"/>
+          <TextBlock Text="Tên:"/>
+          <TextBox x:Name="UserBox" Width="90" Watermark="tên của bạn"/>
+          <TextBlock Text="Phòng:"/>
+          <TextBox x:Name="RoomBox" Width="110" Watermark="tên phòng"/>
+          <Button x:Name="ConnectBtn" Content="Kết nối" Click="OnConnectClick"/>
+          <Button x:Name="LeaveBtn" Content="Rời phòng" Click="OnLeaveClick"/>
+          <TextBlock x:Name="StatusText" Text="Chưa kết nối" Foreground="#A33B00" Margin="8,0,0,0"/>
+        </StackPanel>
+      </DockPanel>
     </Border>
 
-    <!-- sidebar phải -->
-    <Border DockPanel.Dock="Right" Width="250" Background="#ECECEC" Padding="10">
+    <!-- sidebar phải (ẩn/hiện bằng nút ☰) -->
+    <Border x:Name="SidePanel" DockPanel.Dock="Right" Width="250" Background="#ECECEC" Padding="10">
       <DockPanel>
 
         <!-- công cụ vẽ -->
@@ -59,7 +73,7 @@
           </ComboBox>
 
           <StackPanel Orientation="Horizontal" Spacing="6">
-            <TextBlock Classes="head" Text="Màu" VerticalAlignment="Center"/>
+            <TextBlock Classes="head" Text="Màu"/>
             <ComboBox x:Name="ColorBox" SelectedIndex="0" Width="86">
               <ComboBoxItem>#000000</ComboBoxItem>
               <ComboBoxItem>#E81123</ComboBoxItem>
@@ -67,7 +81,7 @@
               <ComboBoxItem>#107C10</ComboBoxItem>
               <ComboBoxItem>#FF8C00</ComboBoxItem>
             </ComboBox>
-            <TextBlock Classes="head" Text="Nét" VerticalAlignment="Center"/>
+            <TextBlock Classes="head" Text="Nét"/>
             <ComboBox x:Name="ThickBox" SelectedIndex="1" Width="52">
               <ComboBoxItem>1</ComboBoxItem>
               <ComboBoxItem>2</ComboBoxItem>
@@ -91,7 +105,7 @@
           <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="4" Margin="0,4,0,0">
             <TextBox x:Name="ChatInput" Width="160" Watermark="Nhập tin nhắn..."
                      KeyDown="OnChatKeyDown"/>
-            <Button Content="Gửi" Click="OnSendChatClick" Classes="accent"/>
+            <Button Content="Gửi" Click="OnSendChatClick"/>
           </StackPanel>
         </Grid>
 

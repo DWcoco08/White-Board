@@ -119,12 +119,6 @@
       </DockPanel>
     </Border>
 
-    <!-- thanh kéo ẩn/hiện sidebar, nằm trên cạnh dọc giữa vùng vẽ và sidebar -->
-    <Button x:Name="ToggleHandle" DockPanel.Dock="Right" Content="&gt;"
-            Click="OnToggleSidebar" Width="16" Padding="0" FontSize="11"
-            VerticalContentAlignment="Center" VerticalAlignment="Stretch"
-            ToolTip.Tip="Ẩn/hiện bảng điều khiển"/>
-
     <!-- vùng vẽ ở giữa -->
     <Border Background="#DDDDDD" Padding="8">
       <Border x:Name="BoardHost" BorderBrush="#888" BorderThickness="1" Background="White">

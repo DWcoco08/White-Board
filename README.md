@@ -1,14 +1,12 @@
 # Whiteboard — Bảng vẽ cộng tác thời gian thực qua mạng LAN (TCP Socket)
 
-[English](README.md) | Tiếng Việt
-
 Ứng dụng bảng vẽ cộng tác thời gian thực trong mạng nội bộ. Nhiều người cùng vào một phòng để vẽ
 chung, trò chuyện và thấy nhau theo thời gian thực — tất cả được đồng bộ qua giao thức
 client–server tự xây dựng trên **TCP Socket**. Viết bằng **C# / .NET 8** và **Avalonia UI**, chạy
 được trên **Linux và Windows**.
 
-> Bài tập lớn môn *Lập trình mạng*. Đề tài: *"Hệ thống bảng vẽ cộng tác thời gian thực trong mạng
-> LAN sử dụng TCP Socket"*.
+> Bài tập lớn môn _Lập trình mạng_. Đề tài: _"Hệ thống bảng vẽ cộng tác thời gian thực trong mạng
+> LAN sử dụng TCP Socket"_.
 
 ---
 
@@ -26,20 +24,20 @@ client–server tự xây dựng trên **TCP Socket**. Viết bằng **C# / .NET
   kỳ thành viên nào. Quyền được **kiểm soát phía server**, không chỉ ẩn nút trên giao diện.
 - **Phát lại lịch sử** — người vào sau tự động nhận toàn bộ lịch sử vẽ và dựng lại đúng bảng hiện
   tại.
-- **Đồng bộ theo sự kiện** — chỉ truyền *thao tác vẽ* qua mạng (không truyền ảnh màn hình), giúp
+- **Đồng bộ theo sự kiện** — chỉ truyền _thao tác vẽ_ qua mạng (không truyền ảnh màn hình), giúp
   tiết kiệm băng thông.
 
 ---
 
 ## Công nghệ
 
-| Hạng mục  | Lựa chọn                                |
-|-----------|-----------------------------------------|
-| Ngôn ngữ  | C#                                      |
-| Nền tảng  | .NET 8                                  |
-| Giao diện | Avalonia UI 11 (desktop đa nền tảng)    |
-| Mạng      | TCP Socket (`TcpListener` / `TcpClient`)|
-| Giao thức | NDJSON (mỗi message là một dòng JSON)   |
+| Hạng mục  | Lựa chọn                                 |
+| --------- | ---------------------------------------- |
+| Ngôn ngữ  | C#                                       |
+| Nền tảng  | .NET 8                                   |
+| Giao diện | Avalonia UI 11 (desktop đa nền tảng)     |
+| Mạng      | TCP Socket (`TcpListener` / `TcpClient`) |
+| Giao thức | NDJSON (mỗi message là một dòng JSON)    |
 
 ---
 
@@ -53,13 +51,12 @@ client–server tự xây dựng trên **TCP Socket**. Viết bằng **C# / .NET
                        └─────────┬──────────┘
               ┌──────────────────┼──────────────────┐
          ┌────┴────┐        ┌────┴────┐        ┌────┴────┐
-         │ Client  │        │ Client  │        │ Client  │
-         │   huy   │        │  minh   │        │   lan   │
+         │ Client1 │        │ Client2 │        │ Client3 │
          └─────────┘        └─────────┘        └─────────┘
 ```
 
 - **Server** nhận kết nối TCP, chạy một luồng xử lý bất đồng bộ cho mỗi client, gom client vào các **phòng**, và phát sự kiện cho mọi người trong cùng phòng.
-- Mỗi **client** kết nối, vào phòng và hiển thị bảng vẽ chung. Khi một người vẽ, client gửi một *sự kiện vẽ*; server chuyển tiếp cho các thành viên còn lại.
+- Mỗi **client** kết nối, vào phòng và hiển thị bảng vẽ chung. Khi một người vẽ, client gửi một _sự kiện vẽ_; server chuyển tiếp cho các thành viên còn lại.
 - Message được đóng khung theo **NDJSON** — mỗi message là một đối tượng JSON trên một dòng kết thúc bằng `\n` — giúp tách chính xác luồng byte liên tục của TCP thành từng message riêng biệt.
 
 ---
@@ -179,39 +176,11 @@ Người vào phòng đầu tiên sẽ là **Host**.
 3. Trên mỗi **máy client**, điền **Server** là IP LAN đó, giữ **Cổng** `5000`, và dùng **cùng tên
    Phòng**.
 
-> Tất cả các máy phải ở cùng mạng LAN/Wi-Fi. Chỉ dùng `127.0.0.1` khi client chạy chung máy với
-> server.
-
----
-
-## Thử nhanh
-
-Một kịch bản demo:
-
-1. Một người vẽ một hình → mọi người thấy hiện ra ngay.
-2. Di chuột trên bảng → người khác thấy con trỏ kèm tên bạn chạy theo.
-3. Một người vào sau → bảng của họ được dựng lại từ lịch sử tự động.
-4. Gửi một tin nhắn chat → mọi người đều nhận được.
-5. Host chọn một thành viên và khóa quyền vẽ → người đó không vẽ được nữa (server chặn).
-6. Bấm **Xóa bảng** → bảng của cả phòng cùng trắng.
-
----
-
-## Điểm thiết kế nổi bật
-
-- **Project giao thức dùng chung** — cả client và server đều tham chiếu `Whiteboard.Shared`, nên
-  định dạng message không bao giờ lệch nhau giữa hai bên.
-- **Đóng khung NDJSON** — giải quyết bài toán "ranh giới message" kinh điển của TCP mà không cần
-  bộ phân tích theo độ dài.
-- **Quyền lực phía server** — quyền vẽ và lịch sử được kiểm soát ở server, nên không thể bị qua mặt
-  bằng một client đã chỉnh sửa.
-- **Đồng bộ theo sự kiện** — truyền thao tác thay vì truyền điểm ảnh giúp giao thức gọn nhẹ và bảng
-  vẽ luôn sắc nét ở mọi kích thước.
-- **An toàn đa luồng** — trạng thái phòng được bảo vệ bằng khóa, và mỗi socket tuần tự hóa lượt
-  ghi, nên nhiều client đồng thời không làm hỏng dữ liệu chung.
+> Tất cả các máy phải ở cùng mạng LAN/Wi-Fi. Chỉ dùng `127.0.0.1` khi client chạy chung máy với server, khác máy phải điền IP LAN của server.
 
 ---
 
 ## Tác giả
 
 **Đặng Nguyễn Đức Huy** — Bài tập lớn môn Lập trình mạng.
+IP

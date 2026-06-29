@@ -82,7 +82,7 @@
 
         <!-- danh sách thành viên -->
         <Border Background="White" BorderBrush="#CCC" BorderThickness="1" Margin="0,2,0,0">
-          <ListBox x:Name="MemberList"/>
+          <ListBox x:Name="MemberList" SelectionChanged="OnMemberSelected"/>
         </Border>
 
       </DockPanel>

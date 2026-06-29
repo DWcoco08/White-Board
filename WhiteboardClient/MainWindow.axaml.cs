@@ -108,7 +108,7 @@ public partial class MainWindow : Window
             case "joined":
                 _username = m.Username ?? _username; // dùng tên server cấp
                 _isHost = m.IsHost ?? false;
-                PermBtn.IsVisible = _isHost;
+                PermBtn.IsVisible = false;    // nút khóa quyền chỉ hiện khi chọn 1 thành viên
                 ClearBtn.IsVisible = _isHost; // chỉ Host mới thấy nút Xóa bảng
                 StatusText.Text = $"Đã vào phòng {m.Room} ({(_isHost ? "Host" : "Member")})";
                 break;
@@ -164,9 +164,25 @@ public partial class MainWindow : Window
         {
             _canDraw = me.CanDraw;
             _isHost = me.IsHost;
-            PermBtn.IsVisible = _isHost;
             ClearBtn.IsVisible = _isHost; // đồng bộ lại khi quyền Host thay đổi
         }
+        UpdatePermButton(); // cập nhật nút khóa quyền theo thành viên đang chọn
+    }
+
+    // nút khóa/mở quyền vẽ chỉ hiện khi Host đang chọn 1 thành viên khác mình
+    private void OnMemberSelected(object? sender, SelectionChangedEventArgs e) => UpdatePermButton();
+
+    private void UpdatePermButton()
+    {
+        var idx = MemberList.SelectedIndex;
+        if (!_isHost || idx < 0 || idx >= _memberInfos.Count || _memberInfos[idx].Name == _username)
+        {
+            PermBtn.IsVisible = false;
+            return;
+        }
+        var target = _memberInfos[idx];
+        PermBtn.Content = target.CanDraw ? $"Khóa quyền vẽ: {target.Name}" : $"Mở quyền vẽ: {target.Name}";
+        PermBtn.IsVisible = true;
     }
 
     private void AddChat(string from, string text)

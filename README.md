@@ -43,18 +43,6 @@ client–server tự xây dựng trên **TCP Socket**. Viết bằng **C# / .NET
 
 ## Kiến trúc
 
-```
-                       ┌────────────────────┐
-                       │       Server       │
-                       │  TcpListener:5000  │
-                       │     RoomManager    │
-                       └─────────┬──────────┘
-              ┌──────────────────┼──────────────────┐
-         ┌────┴────┐        ┌────┴────┐        ┌────┴────┐
-         │ Client1 │        │ Client2 │        │ Client3 │
-         └─────────┘        └─────────┘        └─────────┘
-```
-
 - **Server** nhận kết nối TCP, chạy một luồng xử lý bất đồng bộ cho mỗi client, gom client vào các **phòng**, và phát sự kiện cho mọi người trong cùng phòng.
 - Mỗi **client** kết nối, vào phòng và hiển thị bảng vẽ chung. Khi một người vẽ, client gửi một _sự kiện vẽ_; server chuyển tiếp cho các thành viên còn lại.
 - Message được đóng khung theo **NDJSON** — mỗi message là một đối tượng JSON trên một dòng kết thúc bằng `\n` — giúp tách chính xác luồng byte liên tục của TCP thành từng message riêng biệt.
@@ -158,6 +146,9 @@ dotnet run --project WhiteboardClient
 Trong cửa sổ client, điền **Server**, **Cổng**, **Tên**, **Phòng** rồi bấm **Kết nối**.
 Người vào phòng đầu tiên sẽ là **Host**.
 
+Các ô để trống đều có **giá trị mặc định**, nên có thể bấm **Kết nối** ngay mà không cần nhập gì:
+Server → `127.0.0.1`, Cổng → `5000`, Tên → `guest`, Phòng → `default`.
+
 ---
 
 ## Chạy trên mạng LAN
@@ -176,7 +167,7 @@ Người vào phòng đầu tiên sẽ là **Host**.
 3. Trên mỗi **máy client**, điền **Server** là IP LAN đó, giữ **Cổng** `5000`, và dùng **cùng tên
    Phòng**.
 
-> Tất cả các máy phải ở cùng mạng LAN/Wi-Fi. Chỉ dùng `127.0.0.1` khi client chạy chung máy với server, khác máy phải điền IP LAN của server.
+Tất cả các máy phải ở cùng mạng LAN/Wi-Fi. Chỉ dùng `127.0.0.1` khi client chạy chung máy với server, khác máy phải điền IP LAN của server.
 
 ---
 

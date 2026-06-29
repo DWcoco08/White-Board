@@ -171,7 +171,31 @@ Tất cả các máy phải ở cùng mạng LAN/Wi-Fi. Chỉ dùng `127.0.0.1` 
 
 ---
 
+## Demo thử nhanh
+
+Có thể demo ngay trên **một máy**: mở 1 server và 2–3 client (cùng `127.0.0.1`, khác **Tên**, cùng **Phòng**).
+
+```bash
+# Terminal 1 — server (để chạy suốt)
+dotnet run --project WhiteboardServer
+
+# Terminal 2, 3, ... — mỗi client một cửa sổ
+dotnet run --project WhiteboardClient
+```
+
+Lần lượt thử các tính năng:
+
+1. **Vẽ realtime** — vẽ đường thẳng/chữ nhật/tròn/bút ở một cửa sổ, các cửa sổ khác hiện ngay.
+2. **Con trỏ trực tiếp** — di chuột trên bảng, người khác thấy con trỏ kèm tên bạn.
+3. **Phát lại lịch sử** — mở thêm một client vào sau, bảng tự dựng lại toàn bộ hình đã vẽ.
+4. **Chat** — gửi tin nhắn, mọi người trong phòng đều nhận.
+5. **Phân quyền** — Host chọn một thành viên rồi khóa quyền vẽ; người đó không vẽ được nữa (server chặn).
+6. **Xóa bảng (chỉ Host)** — chỉ Host có nút **Xóa bảng**; bấm thì cả phòng cùng trắng.
+7. **Rời phòng** — bấm **Rời phòng** để rời rồi vào lại phòng khác mà không cần tắt app.
+8. **Chống trùng tên** — hai người cùng đặt tên `huy` thì người sau tự thành `huy(2)`.
+
+---
+
 ## Tác giả
 
 **Đặng Nguyễn Đức Huy** — Bài tập lớn môn Lập trình mạng.
-IP

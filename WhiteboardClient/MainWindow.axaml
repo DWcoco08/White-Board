@@ -11,13 +11,13 @@
     <Border DockPanel.Dock="Top" Background="#2D2D30" Padding="8">
       <StackPanel Orientation="Horizontal" Spacing="6">
         <TextBlock Text="Server:" Foreground="White" VerticalAlignment="Center"/>
-        <TextBox x:Name="HostBox" Width="120" Text="127.0.0.1"/>
+        <TextBox x:Name="HostBox" Width="120" Watermark="127.0.0.1"/>
         <TextBlock Text="Cổng:" Foreground="White" VerticalAlignment="Center"/>
-        <TextBox x:Name="PortBox" Width="60" Text="5000"/>
+        <TextBox x:Name="PortBox" Width="60" Watermark="5000"/>
         <TextBlock Text="Tên:" Foreground="White" VerticalAlignment="Center"/>
-        <TextBox x:Name="UserBox" Width="100" Text="huy"/>
+        <TextBox x:Name="UserBox" Width="100" Watermark="tên của bạn"/>
         <TextBlock Text="Phòng:" Foreground="White" VerticalAlignment="Center"/>
-        <TextBox x:Name="RoomBox" Width="120" Text="NetworkClass"/>
+        <TextBox x:Name="RoomBox" Width="120" Watermark="tên phòng"/>
         <Button x:Name="ConnectBtn" Content="Kết nối" Click="OnConnectClick"/>
         <Button x:Name="LeaveBtn" Content="Rời phòng" Click="OnLeaveClick" IsEnabled="False"/>
         <TextBlock x:Name="StatusText" Text="Chưa kết nối" Foreground="#FFD479"
